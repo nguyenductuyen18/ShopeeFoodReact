@@ -7,6 +7,8 @@ import FoodList from './page/FoodList';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeMerchant from './page/HomeMerchant';
 import ListOrderShop from './page/order/ListOrderShop';
+import Shipper from './page/shipper/ShipperByOrder';
+import ShipperReceived from './page/shipper/ShipperReceived';
 import ListOrderUser from './page/order/ListOrderUser';
 import HomeProduct from './Product/HomeProduct';
 import OrderAndListOrderItem from './Product/OrderAndListOrderItem';
@@ -30,6 +32,8 @@ function App() {
             <Route path='/HomeProduct' element={<HomeProduct />} ></Route>
             <Route path='/OrderAndListOrderItem' element={<OrderAndListOrderItem />} ></Route>
             <Route path='/ListOrderShop/:id' element={<ListOrderShop />} ></Route>
+            <Route path='/shipper' element={<Shipper />} ></Route>
+            <Route path='/ShipperReceived' element={<ShipperReceived />} ></Route>
             <Route path='/ListOrderUser/:id' element={<ListOrderUser />} ></Route>
           </Routes>
         </BrowserRouter>

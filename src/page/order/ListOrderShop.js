@@ -4,9 +4,6 @@ import "./ListOrderShop.css"; // Import the CSS file
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faSearch,
-    faTrash,
-    faPenSquare,
     faArrowLeft,
     faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +13,6 @@ import ModalMerchant from "./ModalMerchant";
 import { toast } from "react-toastify";
 import PopupDelete from "../../compoment/PopupDelete";
 import HeadHome from "../../compoment/HeadHome";
-
 
 function ListOrderShop() {
     const [modalShow, setModalShow] = useState(false);
@@ -31,17 +27,30 @@ function ListOrderShop() {
     const [id, setIdOder] = useState();
     const [open, setOpen] = useState(false);
 
-
-
     async function setStatusConfirmOrder(idOrder) {
         try {
             const response = await axios.put(`http://localhost:8080/api/order/status/${idOrder}/2`);
             console.log('Order status updated:', response.data);
-            toast.success("Nhận đơn hàng thành công")
+            toast.success("Nhận đơn hàng thành công");
+            // Refresh the list of orders
+            listOrdersByUser();
         } catch (error) {
             console.error('Error updating order status:', error);
         }
     }
+
+    async function setStatusCancelOrder(idOrder) {
+        try {
+            const response = await axios.put(`http://localhost:8080/api/order/status/${idOrder}/3`);
+            console.log('Order status updated:', response.data);
+            toast.success("Hủy đơn hàng thành công");
+            // Refresh the list of orders
+            listOrdersByUser();
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
+    }
+
     function formatNumberWithCommas(number) {
         return number.toLocaleString("de-DE");
     }
@@ -51,10 +60,7 @@ function ListOrderShop() {
             const response = await axios.get(
                 `http://localhost:8080/api/order/orders/shop/${params.id}`
             );
-            // Ensure the data is an array and log its length
             if (Array.isArray(response.data)) {
-                console.log("API returned an array with length:", response.data.length);
-                // Process createdAt to keep only the necessary parts
                 const processedOrders = response.data.map((order) => {
                     const createdAt = new Date(
                         order.createdAt[0], // Year
@@ -75,6 +81,7 @@ function ListOrderShop() {
             console.error("Error fetching orders:", error);
         }
     }
+
     const indexOfLastProduct = currentPage * ordersPerPage;
     const indexOfFirstProduct = indexOfLastProduct - ordersPerPage;
     const ordersProducts = orders.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -106,81 +113,87 @@ function ListOrderShop() {
 
     async function listOrdersByOrderId() {
         if (orderId) {
-            console.log(orderId)
             const response = await axios.get(
                 `http://localhost:8080/api/order/orderItem/${orderId}`
             );
-            test.current = response.data
+            test.current = response.data;
             console.log(test.current);
         }
     }
+
     const handleClose = () => {
-        setOpen(!open)
+        setOpen(!open);
     }
+
     const handleStatusConfirmOrder = (id) => {
         setIdOder(id);
-        setOpen(true)
+        setOpen(true);
     }
 
     return (
         <>
-        <HeadHome/>
+            <HeadHome />
             <h2 className="center">Danh sách đơn hàng</h2>
-
-            <table class="table table-bordered">
-                <tr>
-                    <th className="center">STT</th>
-                    <th className="center">Mã đơn hàng</th>
-                    <th>Thời gian </th>
-                    <th>Thông tin khách hàng </th>
-                    <th>Thành tiền</th>
-                    <th>Trạng thái</th>
-                    <th>Chi tiết</th>
-                </tr>
-                {ordersProducts.map((order, index) => (
+            <table className="table table-bordered">
+                <thead>
                     <tr>
-                        <td className="center">{index + 1}</td>
-                        <td className="center">{order.id}</td>
-                        <td>
-                            Thời gian đặt:{" "}
-                            {moment(order.createdAt).format(" DD-MM-YYYY HH:mm")}
-                        </td>
-                        <td>
-                            {order.user.name}
-                            <br />
-                            {order.user.phoneNumber}
-                            <br />
-                            {order.user.address}
-                        </td>
-                        <td>
-                            {formatNumberWithCommas(calculateOrderTotal(order.orderItems))} đ
-                        </td>
-                        <td>
-                           <div className='button-orders'>
-                                <button onClick={() => setStatusConfirmOrder(order.id)} type="button" class="btn btn-success">Nhận đơn</button><br />
-                                <button onClick={() => handleStatusConfirmOrder(order.id)} type="button" class="btn btn-danger">Hủy đơn</button>
-                            </div>
-                        </td>
-                        <td className="link">
-                            <div>
+                        <th className="center">STT</th>
+                        <th className="center">Mã đơn hàng</th>
+                        <th>Thời gian</th>
+                        <th>Thông tin khách hàng</th>
+                        <th>Thành tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {ordersProducts.map((order, index) => (
+                        <tr key={order.id}>
+                            <td className="center">{index + 1}</td>
+                            <td className="center">{order.id}</td>
+                            <td>Thời gian đặt: {moment(order.createdAt).format("DD-MM-YYYY HH:mm")}</td>
+                            <td>
+                                {order.user.name}<br />
+                                {order.user.phoneNumber}<br />
+                                {order.user.address}
+                            </td>
+                            <td>{formatNumberWithCommas(calculateOrderTotal(order.orderItems))} đ</td>
+                            <td>
+                                <div className='button-orders'>
+                                    {order.status.id === 2 && (
+                                        <button onClick={() => setStatusConfirmOrder(order.id)} type="button" className="btn btn-success">Nhận đơn</button>
+                                    )}
+                                    {order.status.id === 3 && (
+                                        <button onClick={() => setStatusCancelOrder(order.id)} type="button" className="btn btn-danger">Hủy đơn</button>
+                                    )}
+                                    {order.status.id === 1 && (
+                                        <>
+                                            <button onClick={() => setStatusConfirmOrder(order.id)} type="button" className="btn btn-success">Nhận đơn</button><br />
+                                            <button onClick={() => setStatusCancelOrder(order.id)} type="button" className="btn btn-danger">Hủy đơn</button>
+                                        </>
+                                    )}
+                                </div>
+                            </td>
+                            <td className="link">
                                 <Link
                                     onClick={() => {
                                         setModalShow(true);
                                         setDataOrderId(order.id);
-                                        setUser(order.user)
+                                        setUser(order.user);
                                     }}
                                 >
                                     Chi tiết đơn hàng
                                 </Link>
-                            </div>
-                        </td>
-                    </tr>
-                ))}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <PopupDelete
                 open={open}
                 handleClose={handleClose}
-                id={id} />
+                id={id}
+            />
             {/* Pagination */}
             <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
@@ -201,12 +214,7 @@ function ListOrderShop() {
                         </li>
                     )
                 )}
-                <li
-                    className={`page-item ${currentPage === Math.ceil(orders.length / ordersPerPage)
-                        ? "disabled"
-                        : ""
-                        }`}
-                >
+                <li className={`page-item ${currentPage === Math.ceil(orders.length / ordersPerPage) ? "disabled" : ""}`}>
                     <button onClick={nextPage} className="page-link">
                         <FontAwesomeIcon icon={faArrowRight} />
                     </button>

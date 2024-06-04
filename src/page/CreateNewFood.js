@@ -20,6 +20,7 @@ export default function CreateNewFood() {
     const [errors, setErrors] = useState({});
 
     async function getListMenu() {
+        console.log(menus)
         try {
             const response = await axios.get(`http://localhost:8080/api/menus/${params.id}`);
             const menuData = response.data;

@@ -10,13 +10,13 @@
 /* Each order card */
 .order-card {
     border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        width: 80%;
-        background-color: #fff;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin: auto;
-        /* Căn giữa theo chiều ngang */
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    /* Căn giữa theo chiều ngang */
 }
 
 /* Header section for each order */
@@ -55,12 +55,13 @@
     text-align: left;
     font-size: 17.6px !important;
     font-weight: bold;
-        color: #333;
+    color: #333;
     /* Use !important to force the font size */
     /* Increase font size for item details */
 }
+
 .detail-restaurant-img {
-   width: 130px;
+    width: 130px;
     /* Điều chỉnh khoảng cách giữa ảnh và dữ liệu */
 }
 
@@ -82,6 +83,7 @@
     object-fit: cover;
     /* Ensure the image covers the container */
 }
+
 /* Order status section */
 .order-status {
     display: flex;
@@ -115,6 +117,7 @@
     cursor: pointer;
     font-weight: bold;
 }
+
 .status-yellow {
     background-color: yellow;
     color: black;
@@ -138,9 +141,11 @@
     border-radius: 4px;
     font-weight: bold;
 }
-.detailUser{
+
+.detailUser {
     margin-top: 5px;
 }
+
 .waiting-button {
     background-color: #ffc107;
     /* Yellow color */
@@ -151,4 +156,42 @@
     font-size: 14px;
     font-weight: bold;
     cursor: default;
+}
+
+.button-orders {
+    width: 120px;
+}
+
+.btn {
+    width: 120px;
+    margin-top: 5px;
+}
+
+.modal-content {
+    display: flex;
+    height: 40rem;
+    min-width: 1200px;
+}
+
+.modal-dialog {
+    display: flex;
+    min-width: 60%;
+}
+
+.modal-footer {
+    display: flex;
+    margin: 0 auto;
+}
+
+.color-modal {
+    font-size: 25px;
+    color: rgb(255, 9, 9);
+}
+.color-moda2 {
+    font-size: 22px;
+    color: rgb(255, 9, 9);
+}
+
+.padding-sum {
+    padding-right: 670px;
 }

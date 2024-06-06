@@ -502,4 +502,11 @@
 .payment-button{
     color: white
 }
-
+.search-items {
+    position: sticky;
+    top: 70px;
+    background: #fff;
+    z-index: 2;
+    padding: 15px 0 10px;
+    position: -webkit-sticky;
+}

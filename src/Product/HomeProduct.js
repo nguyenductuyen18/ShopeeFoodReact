@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faDuotoneHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faRegularHeart, faStar, faClock, faStarHalfStroke, faMagnifyingGlass, faSadTear, faSackDollar, faPhone, faLocationDot, faEnvelope, faWallet } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import OrderAndListOrderItem from './OrderAndListOrderItem';
 import { Link } from 'react-router-dom';
 import FooterHome from '../compoment/FooterHome';
 
 export default function HomeProduct() {
     const navigate = useNavigate();
+    const params = useParams();
     const [allMenusRendered, setAllMenusRendered] = useState(false);
     const [menuProducts, setMenuProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +36,7 @@ export default function HomeProduct() {
     const [idMenu, setIdMenu] = useState(null);
     const menuRefs = useRef([]);
     async function getProduct() {
-        const response = await axios.get(`http://localhost:8080/api/shops/1`);
+        const response = await axios.get(`http://localhost:8080/api/shops/${params.id}`);
         setProduct(response.data);
         setName(response.data.name);
         setAddress(response.data.address);
@@ -59,15 +60,15 @@ export default function HomeProduct() {
 
     useEffect(() => {
         getProduct();
-    
+
     }, []);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/menus/1');
+            const response = await axios.get(`http://localhost:8080/api/menus/${params.id}`);
             let menus = response.data;
 
-          
+
             if (!Array.isArray(menus)) {
                 menus = [menus];
             }
@@ -110,7 +111,7 @@ export default function HomeProduct() {
 
     const Showcar = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/detailCart/1/1`);
+            const response = await axios.get(`http://localhost:8080/api/detailCart/${params.id}/1`);
             setCart(response.data);
         } catch (error) {
             console.error('Error fetching cart data:', error);
@@ -119,7 +120,7 @@ export default function HomeProduct() {
 
     const addProductToCart = async (idShop, idUser, idProduct) => {
         try {
-            const response = await axios.post(`http://localhost:8080/api/detailCart/1/1/${idProduct}`);
+            const response = await axios.post(`http://localhost:8080/api/detailCart/${params.id}/1/${idProduct}`);
             console.log('Product added to cart:', response.data);
             Showcar();
         } catch (error) {
@@ -223,7 +224,7 @@ export default function HomeProduct() {
             console.error('Error deleting like:', error);
         }
     };
- 
+
     useEffect(() => {
         fetchMenus();
     }, []);
@@ -310,7 +311,7 @@ export default function HomeProduct() {
                                                         {menu.name}
                                                     </a>
                                                 </div>
-                                            ))}         
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +338,7 @@ export default function HomeProduct() {
                                             <div key={index} className='memu-group'>
                                                 {menuProduct.products.length > 0 && (
                                                     <>
-                                                    
+
                                                         <div key={index} className='memu-group'>
                                                             <div className='title-menu' id={menuProduct.menu.name}>
                                                                 {menuProduct.menu.name}
@@ -426,9 +427,9 @@ export default function HomeProduct() {
                                         <FontAwesomeIcon className='iconWallet' icon={faWallet} /> <span className='sumPrice'>Tổng: {formatNumberWithCommas(sum)} đ</span>
                                     </div>
                                     <form className="payment-form">
-                                      <button>
+                                        <button>
                                             <Link to="/OrderAndListOrderItem" className="payment-button">+ Xác nhận thanh toán</Link>
-                                            </button> 
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -436,7 +437,7 @@ export default function HomeProduct() {
                     </div>
                 </div>
             </div>
-            <FooterHome/>
+            <FooterHome />
         </div>
     );
 }

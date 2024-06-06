@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HeadHome from '../compoment/HeadHome';
 import '../css/LayoutHome.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +12,7 @@ import FooterHome from '../compoment/FooterHome';
 
 export default function HomeProduct() {
     const navigate = useNavigate();
+    const [allMenusRendered, setAllMenusRendered] = useState(false);
     const [menuProducts, setMenuProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [idShop, setIdShop] = useState(1);
@@ -31,7 +32,8 @@ export default function HomeProduct() {
     const [sum, setSum] = useState(0);
     const [noResults, setNoResults] = useState(false);
     const [likedProducts, setLikedProducts] = useState({});
-
+    const [idMenu, setIdMenu] = useState(null);
+    const menuRefs = useRef([]);
     async function getProduct() {
         const response = await axios.get(`http://localhost:8080/api/shops/1`);
         setProduct(response.data);
@@ -51,32 +53,24 @@ export default function HomeProduct() {
         return number.toLocaleString('de-DE');
     }
 
-    async function CreateOrder(e) {
-        e.preventDefault();
-        try {
-            const orderResponse = await axios.post(`http://localhost:8080/api/order/1/1`, null, { timeout: 5000 });
-            console.log('Đặt hàng thành công', orderResponse.data);
-            await Showcar()
-        } catch (error) {
-            return [];
-        }
-    }
 
-    async function getMenu() {
-        const response = await axios.get(`http://localhost:8080/api/menus/1`);
-        console.log(response.data);
-        setMenus(response.data);
-    }
+
+
 
     useEffect(() => {
         getProduct();
-        getMenu();
+    
     }, []);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/menus/1`);
-            const menus = response.data;
+            const response = await axios.get('http://localhost:8080/api/menus/1');
+            let menus = response.data;
+
+          
+            if (!Array.isArray(menus)) {
+                menus = [menus];
+            }
 
             const menuProductsPromises = menus.map(async (menu) => {
                 const menuId = menu.id;
@@ -96,6 +90,8 @@ export default function HomeProduct() {
             console.error('Error fetching data:', error);
         }
     };
+
+
 
     const findByNameAndMenu = async (menuId, productName) => {
         try {
@@ -227,6 +223,23 @@ export default function HomeProduct() {
             console.error('Error deleting like:', error);
         }
     };
+ 
+    useEffect(() => {
+        fetchMenus();
+    }, []);
+
+
+
+    const fetchMenus = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/menus/1');
+            setMenus(response.data);
+        } catch (error) {
+            console.error('Error fetching menus:', error);
+        }
+    };
+
+
 
     return (
         <div>
@@ -291,9 +304,13 @@ export default function HomeProduct() {
                                 <div className='list-category'>
                                     <div className='scrollbar-container ps'>
                                         <div className='item'>
-                                            {menus.map((menu) => (
-                                                <span className='item-link' key={menu.id}>{menu.name}</span>
-                                            ))}
+                                            {menus.map((menu, index) => (
+                                                <div key={menu.id} ref={el => (menuRefs.current[index] = el)}>
+                                                    <a className='item-link' href={`#${menu.name}`} >
+                                                        {menu.name}
+                                                    </a>
+                                                </div>
+                                            ))}         
                                         </div>
                                     </div>
                                 </div>
@@ -320,8 +337,15 @@ export default function HomeProduct() {
                                             <div key={index} className='memu-group'>
                                                 {menuProduct.products.length > 0 && (
                                                     <>
-                                                        <div className='title-menu'>
-                                                            {menuProduct.menu.name}
+                                                    
+                                                        <div key={index} className='memu-group'>
+                                                            <div className='title-menu' id={menuProduct.menu.name}>
+                                                                {menuProduct.menu.name}
+                                                            </div>
+                                                            {menuProduct.products.map((product, index) => (
+                                                                <div key={index} ref={index === 0 ? menuRefs.current[index] : null} className='product'>
+                                                                </div>
+                                                            ))}
                                                         </div>
                                                         {menuProduct.products.map((product, index) => {
                                                             if (product.status === 1) {

@@ -119,6 +119,7 @@ export default function OrderAndListOrderItem() {
     try {
       await axios.put(`http://localhost:8080/api/detailCart/plus/${id}`);
       Showcar();
+      
     } catch (error) {
       console.error('Lỗi khi tăng số lượng sản phẩm:', error);
     }
@@ -382,8 +383,11 @@ export default function OrderAndListOrderItem() {
           <div className="modal-con">
             <h2>Cập nhật địa chỉ</h2>
             <form className="form-cute" onSubmit={handleUpdateAddress}>
+              Tên khách hàng
               <input className="text-cute" type="text" name="name" placeholder="Tên khách hàng" defaultValue={addressToEdit.nameUser} required />
+              Địa chỉ nhận hàng
               <input className="text-cute" type="text" name="details" placeholder="Địa chỉ nhận hàng" defaultValue={addressToEdit.address} required />
+              Số điện thoại nhận hàng
               <input className="text-cute" type="text" name="contact" placeholder="Số điện thoại nhận hàng" defaultValue={addressToEdit.phoneNumber} required />
               <button className="button-good" type="submit">Cập nhật</button>
             </form>

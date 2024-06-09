@@ -15,6 +15,7 @@ import OrderAndListOrderItem from './Product/OrderAndListOrderItem';
 import DetailProductMerchant from './page/DetailProductMerchant';
 import DetailsShopMerchant from './page/DetailsShopMerchant';
 import { ToastContainer, toast } from 'react-bootstrap';
+import TheFirstTemplate from './Product/TheFirstTemplate';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='/shipper' element={<Shipper />} ></Route>
             <Route path='/ShipperReceived' element={<ShipperReceived />} ></Route>
             <Route path='/ListOrderUser/:id' element={<ListOrderUser />} ></Route>
+            <Route path='/TheFirstTemplate' element={<TheFirstTemplate />}></Route>
           </Routes>
         </BrowserRouter>
       </div>

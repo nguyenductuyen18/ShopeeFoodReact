@@ -15,22 +15,27 @@ import OrderAndListOrderItem from './Product/OrderAndListOrderItem';
 import DetailProductMerchant from './page/DetailProductMerchant';
 import DetailsShopMerchant from './page/DetailsShopMerchant';
 import { ToastContainer, toast } from 'react-bootstrap';
+
 import TheFirstTemplate from './Product/TheFirstTemplate';
+
+import ListProduct from './Product/ListProduct';
+
 
 
 function App() {
   return (
-  <>
+    <>
       <div >
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<HomeMerchant />} ></Route>
+            <Route path='/' element={<ListProduct />} ></Route>
+            <Route path='/homeMerchant' element={<HomeMerchant />} ></Route>
             <Route path='/detailShop/:id' element={<DetailsShopMerchant />} ></Route>
             <Route path='/create' element={<CreateMerchant />} ></Route>
             <Route path='/updateShop/:id' element={<UpdateMerchant />} ></Route>
             <Route path="/createFood/:id" element={<CreateNewFood />}></Route>
             <Route path="/foodList/:id" element={<FoodList />}></Route>
-            <Route path='/HomeProduct' element={<HomeProduct />} ></Route>
+            <Route path='/HomeProduct/:id' element={<HomeProduct />} ></Route>
             <Route path='/OrderAndListOrderItem' element={<OrderAndListOrderItem />} ></Route>
             <Route path='/ListOrderShop/:id' element={<ListOrderShop />} ></Route>
             <Route path='/shipper' element={<Shipper />} ></Route>
@@ -41,7 +46,7 @@ function App() {
         </BrowserRouter>
       </div>
       <ToastContainer></ToastContainer>
-</>
+    </>
   );
 }
 

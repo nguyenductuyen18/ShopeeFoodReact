@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import HeadHome from "../../compoment/HeadHome";
+
 function ShipperReceived() {
     const [orderShip, setShipOrder] = useState([]);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [ordersPerPage] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
@@ -22,18 +23,18 @@ function ShipperReceived() {
             console.error('Error fetching orders:', error);
         }
     }
+
     async function setStatusConfirmOrder(idOrder, idStatus) {
         try {
             const response = await axios.put(`http://localhost:8080/api/order/status/${idOrder}/${idStatus}`);
             console.log('Order status updated:', response.data);
-            return getOrderByShip();
-
+            getOrderByShip();
         } catch (error) {
             console.error('Error updating order status:', error);
         }
     }
 
-  
+    // Pagination logic
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = orderShip.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -41,6 +42,18 @@ function ShipperReceived() {
     const paginate = (pageNumber) => {
         if (pageNumber > 0 && pageNumber <= totalPages) {
             setCurrentPage(pageNumber);
+        }
+    };
+
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
         }
     };
 
@@ -58,9 +71,9 @@ function ShipperReceived() {
                     </tr>
                 </thead>
                 <tbody>
-                    {orderShip && orderShip.map((order, index) => (
+                    {currentOrders.map((order, index) => (
                         <tr key={order.id}>
-                            <td className="center">{index + 1}</td>
+                            <td className="center">{indexOfFirstOrder + index + 1}</td>
                             <td className="center">{order.id}</td>
                             <td>
                                 {order.user.name}<br />
@@ -73,20 +86,38 @@ function ShipperReceived() {
                                         <button onClick={() => setStatusConfirmOrder(order.id, 6)} type="button" className="btn btn-success">Bắt đầu giao hàng</button>
                                     )}
                                     {order.status.id === 6 && (
-                                          <button onClick={() => setStatusConfirmOrder(order.id, 7)} type="button" className="btn btn-success">Giao thành công</button>
-                                      
+                                        <button onClick={() => setStatusConfirmOrder(order.id, 7)} type="button" className="btn btn-success">Giao thành công</button>
                                     )}
                                     {order.status.id === 7 && (
                                         <div>Đơn hàng đã giao thành công</div>
                                     )}
-
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            
+
+            {/* Pagination */}
+            <ul className="pagination">
+                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                    <button onClick={prevPage} className="page-link">
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </button>
+                </li>
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <li key={i} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
+                        <button onClick={() => paginate(i + 1)} className="page-link">
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+                <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                    <button onClick={nextPage} className="page-link">
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
+                </li>
+            </ul>
         </>
     );
 }

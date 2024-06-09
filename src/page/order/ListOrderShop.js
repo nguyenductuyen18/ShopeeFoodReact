@@ -161,10 +161,14 @@ function ListOrderShop() {
                             <td>
                                 <div className='button-orders'>
                                     {order.status.id === 2 && (
-                                        <button onClick={() => setStatusConfirmOrder(order.id)} type="button" className="btn btn-success">Đã nhận đơn</button>
+
+                                        <span>  {order.status.type}</span>
+
                                     )}
                                     {order.status.id === 3 && (
-                                        <button onClick={() => setStatusCancelOrder(order.id)} type="button" className="btn btn-danger">Đã hủy đơn</button>
+                                        <span>  {order.status.type}</span>
+
+
                                     )}
                                     {order.status.id === 1 && (
                                         <>

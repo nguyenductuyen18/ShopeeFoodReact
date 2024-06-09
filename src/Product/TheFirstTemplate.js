@@ -113,21 +113,21 @@ return (
             <h2 className="title1">Ưu đãi</h2>
             </div>
             {shop.map(item => (
-            <div className="item-restaurant">
+            <div className="item-restaurants">
                     <a target="_blank" className="item-content" href="#">
                      <div class="img-restaurant">
                       <img className="img-small" src={`http://localhost:8080/img/${item.image}`}  alt="Sample Image from Unsplash" />
                     </div>
                     <div class="info-restaurant">
-                        <div className="info-basic-res">
-                            <h4 className="name-res" title={item.name}  >{item.name} - {item.idCategory.name} </h4>
+                        <div className="info-basic-ress">
+                            <h4 className="name-ress" title={item.name}  >{item.name} - {item.idCategory.name} </h4>
                             <div className="address-res" title={item.address}>{item.address}
                                 </div>
                                 </div>
-                                <p className="content-promotion">
+                                <p className="content-promotionss">
                                 <FontAwesomeIcon className="fas fa-tag " icon={faTags} /> Giảm món</p>
-                                <div className="opentime-status">
-                                    <span  className="stt online\" title="Mở cửa">
+                                <div className="opentime-statuss">
+                                    <span  className="stt" title="Mở cửa">
                         </span>
                         </div>
                         </div>

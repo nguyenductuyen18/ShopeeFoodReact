@@ -13,9 +13,11 @@ export default function HomeMerchant() {
     }, []);
     const showShop = async () => {
         const result = await axios.get("http://localhost:8080/api/shops")
+        document.title = "Giao diện chủ shop";
         setShop(result.data);
         console.log(result.data);
     };
+    
     return (
         <div>
             <HeadMerchant />

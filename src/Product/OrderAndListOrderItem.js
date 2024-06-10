@@ -91,7 +91,8 @@ export default function OrderAndListOrderItem() {
         headers: { 'Content-Type': 'text/plain' },
       });
       console.log('Đặt hàng thành công', orderResponse.data);
-      navigate(`/ListOrderUser/${idUser}`);
+      navigate(`/HomeProduct/${params.id}`);
+      
     } catch (error) {
       console.error('Lỗi khi đặt hàng:', error);
     }
@@ -115,6 +116,7 @@ export default function OrderAndListOrderItem() {
     }
   }
 
+
   async function getOrderItem() {
     try {
       const response = await axios.get(`http://localhost:8080/api/detailCart/1/${idUser}`);
@@ -123,6 +125,7 @@ export default function OrderAndListOrderItem() {
       console.error('Lỗi khi lấy dữ liệu giỏ hàng:', error);
     }
   }
+
 
   const formatNumberWithCommas = (number) => number.toLocaleString('de-DE');
 

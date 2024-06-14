@@ -29,7 +29,7 @@ function ListOrderShop() {
 
     async function setStatusConfirmOrder(idOrder) {
         try {
-            const response = await axios.put(`http://localhost:8080/api/order/status/${idOrder}/2`);
+            const response = await axios.put(`https://localhost8080.up.railway.app/api/order/status/${idOrder}/2`);
             console.log('Order status updated:', response.data);
             toast.success("Nhận đơn hàng thành công");
             // Refresh the list of orders
@@ -48,7 +48,7 @@ function ListOrderShop() {
 
     async function setStatusCancelOrder(idOrder) {
         try {
-            const response = await axios.put(`http://localhost:8080/api/order/status/${idOrder}/3`);
+            const response = await axios.put(`https://localhost8080.up.railway.app/api/order/status/${idOrder}/3`);
             console.log('Order status updated:', response.data);
             toast.success("Hủy đơn hàng thành công");
             // Refresh the list of orders
@@ -65,7 +65,7 @@ function ListOrderShop() {
     async function listOrdersByUser() {
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/order/orders/shop/${params.id}`
+                `https://localhost8080.up.railway.app/api/order/orders/shop/${params.id}`
                 
             );
             document.title = "Đơn hàng của shopper";
@@ -123,7 +123,7 @@ function ListOrderShop() {
     async function listOrdersByOrderId() {
         if (orderId) {
             const response = await axios.get(
-                `http://localhost:8080/api/order/orderItem/${orderId}`
+                `https://localhost8080.up.railway.app/api/order/orderItem/${orderId}`
             );
             test.current = response.data;
             console.log(test.current);
@@ -225,6 +225,7 @@ function ListOrderShop() {
                 <li className={`page-item ${currentPage === Math.ceil(orders.length / ordersPerPage) ? "disabled" : ""}`}>
                     <button onClick={nextPage} className="page-link">
                         <FontAwesomeIcon icon={faArrowRight} />
+
                     </button>
                 </li>
             </ul>

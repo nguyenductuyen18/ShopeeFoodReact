@@ -10,15 +10,15 @@ export default function HeadHome() {
     const [listShop, setListShop] = useState([]);
 
     async function getListCites() {
-        const response = await axios.get(`http://localhost:8080/api/cities`);
+        const response = await axios.get(`https://localhost8080.up.railway.app/api/cities`);
         setCity(response.data);
     }
     async function getListCategory() {
-        const response = await axios.get(`http://localhost:8080/api/categories`);
+        const response = await axios.get(`https://localhost8080.up.railway.app/api/categories`);
         setCategory(response.data);
     }
     async function searchShopByIdCity(idCity) {
-        const response = await axios.get(`http://localhost:8080/api/categories/idCity/${idCity}`);
+        const response = await axios.get(`https://localhost8080.up.railway.app/api/categories/idCity/${idCity}`);
         console.log(response.data);
         setCategory(response.data)
     }

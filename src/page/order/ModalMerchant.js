@@ -16,7 +16,7 @@ function ModalMerchant(props) {
     const fetchData = async (id, users) => {
         if (id) {
             const response = await axios.get(
-                `http://localhost:8080/api/order/orderItem/${id}`
+                `https://localhost8080.up.railway.app/api/order/orderItem/${id}`
             );
             setNewDataUser(props.users);
             console.log(props.users);

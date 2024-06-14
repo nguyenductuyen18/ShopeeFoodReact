@@ -76,7 +76,7 @@ export default function CreateNewFood() {
         formData.append("detail", values.detail);
         formData.append("image", image);
         formData.append('menus', selectedMenuId);
-
+ 
         try {
             await axios.post("https://localhost8080.up.railway.app/api/products", formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },

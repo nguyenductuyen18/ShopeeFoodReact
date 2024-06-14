@@ -46,7 +46,7 @@ export default function DetailsShopMerchant() {
                         <div className="title">Thông tin chi tiết quán - {name} </div>
                         <Link to={`/updateShop/${id}`} className='carShopAction'>Sửa</Link>
                     </div>
-
+ 
                     <div className='row'>
                         <img src={`https://localhost8080.up.railway.app/img/${image}`}></img>
                     </div>

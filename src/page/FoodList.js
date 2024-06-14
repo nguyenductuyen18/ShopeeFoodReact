@@ -26,7 +26,7 @@ function FoodList() {
             return [];
         }
     }
-
+ 
     const fetchData = async () => {
         try {
             const response = await axios.get(`https://localhost8080.up.railway.app/api/menus/${params.id}`);

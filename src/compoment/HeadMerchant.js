@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 export default function HeadMerchant() {
-
+ 
     return (
         <div className='header'>
            <header class="header">

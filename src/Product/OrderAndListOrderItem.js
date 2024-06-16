@@ -34,10 +34,10 @@ export default function OrderAndListOrderItem() {
     details: '',
     contact: ''
   });
- function handleInput(event) {
-  const { name, value } = event.target;
-  setValues({ ...values, [name]: value });
-}
+  function handleInput(event) {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
+  }
 
   const handleSubmitAddress = async (e) => {
     e.preventDefault();
@@ -165,7 +165,7 @@ export default function OrderAndListOrderItem() {
     try {
       await axios.put(`https://localhost8080.up.railway.app/api/detailCart/plus/${id}`);
       Showcar();
-      
+
     } catch (error) {
       console.error('Lỗi khi tăng số lượng sản phẩm:', error);
     }
@@ -210,7 +210,7 @@ export default function OrderAndListOrderItem() {
     }
   };
 
-  
+
 
   const handleUpdateAddress = async (e) => {
     e.preventDefault();
@@ -242,7 +242,7 @@ export default function OrderAndListOrderItem() {
       console.error('Lỗi khi cập nhật địa chỉ:', error);
     }
   };
- 
+
   const handleSelectAddress = (id) => {
     setSelectedAddressId(id);
     setShowWarning(false);
@@ -253,22 +253,22 @@ export default function OrderAndListOrderItem() {
     if (addr) {
       return (
         <div
-          className={`itemG ${selectedAddressId === addr.id ? 'selected' : ''} ${
-            status === 1 ? 'home' : 'work'
-          }`}
+          className={`itemG ${selectedAddressId === addr.id ? 'selected' : ''} ${status === 1 ? 'home' : 'work'
+            }`}
           key={status}
         >
-          <FontAwesomeIcon className="exit-icon" icon={faCircleXmark} onClick={() => openDeleteModal(addr.id)} />
+
           <FontAwesomeIcon className="div-icon" icon={icon} />
           <div className="div-text-in">
             <div className="div-NameAddress">{label}</div>
             <div className="div-text-in-text">{addr.nameUser}</div>
             <div className="div-text-in-text">{addr.address}</div>
             <button className="button-eidt" onClick={() => handleSelectAddress(addr.id)}>
-              giao tới địa chỉ này
+              Giao tới địa chỉ này
             </button>
             <FontAwesomeIcon className="penhouse" icon={faPenToSquare} onClick={() => openEditModal(addr.id)} />
           </div>
+          <FontAwesomeIcon className="exit-icon" icon={faCircleXmark} onClick={() => openDeleteModal(addr.id)} />
         </div>
       );
     } else {
@@ -287,136 +287,136 @@ export default function OrderAndListOrderItem() {
     }
   };
 
-  
-    return (
-      <div>
-        <HeadHome />
-        <div className="container-for container">
-          <div className="div1">
-            <div className="div3">Thanh toán đơn hàng</div>
-            <div className="div5">
-              <div>
-                <label className="The-text">Chọn địa chỉ giao hàng</label>
-              </div>
-              {showWarning && <div className="warning-message">Bạn hãy chọn địa chỉ </div>}
-              <div className="div4">
-                <div className="itemG">
-                  <FontAwesomeIcon className="div-icon" icon={faLocationDot} />
-                  <div className="div-text-in">
-                    <div className="div-NameAddress">Other</div>
-                    <div className="div-text-in-text">Thêm địa chỉ giao hàng mới</div>
-                    <button className="button-eidt-b" onClick={() => openModal(0)}>
-                      Thêm địa chỉ giao hàng mới
-                    </button>
-                  </div>
-                </div>
-                {renderAddressDiv(1, faHouse, 'Home')}
-                {renderAddressDiv(2, faBriefcase, 'Work')}
-                {address.map(
-                  (addr, index) =>
-                    addr.status === 0 && (
-                      <div
-                        className={`itemG other ${selectedAddressId === addr.id ? 'selected' : ''}`}
-                        key={index}
-                      >
-                        <FontAwesomeIcon className="exit-icon" icon={faCircleXmark} onClick={() => openDeleteModal(addr.id)} />
-                        <FontAwesomeIcon className="div-icon ms-10" icon={faLocationDot} />
-                        <div className="div-text-in">
-                          <div className="div-NameAddress">Other</div>
-                          <div className="div-text-in-text">{addr.address}</div>
-                          <button className="button-eidt" onClick={() => handleSelectAddress(addr.id)}>
-                            giao tới địa chỉ này
-                          </button>
-                          <FontAwesomeIcon className="penhouse" icon={faPenToSquare} onClick={() => openEditModal(addr.id)} />
-                        </div>
-                      </div>
-                    )
-                )}
-              </div>
+
+  return (
+    <div>
+      <HeadHome />
+      <div className="container-for container">
+        <div className="div1">
+          <div className="div3">Thanh toán đơn hàng</div>
+          <div className="div5">
+            <div>
+              <label className="The-text">Chọn địa chỉ giao hàng</label>
             </div>
-            <div className="div6">
-              <label className="The-text">Phương thức thanh toán</label>
-              <label className="little-text">Thanh Toán khi nhận hàng</label>
-              <div className="div7">
-                <div className="div9">
-                  <div className="div8">
-                    <FontAwesomeIcon className="div-iconic" icon={faMoneyBill} />
-                    <label className="text-cutevl">COD</label>
-                  </div>
-                  <div className="color">
-                    <FontAwesomeIcon className="div-iconic" icon={faMoneyCheckDollar} />
-                    <label className="text-cutevl">Credit</label>
-                  </div>
-                  <div className="color">
-                    <FontAwesomeIcon className="div-iconic" icon={faBuildingColumns} />
-                    <label className="text-cutevl">Netbanking</label>
-                  </div>
-                </div>
-                <div className="div10">
-                  <label className="label-hihi">Ghi chú cho cửa hàng</label>
-                  <textarea
-                    className="label-hihi-text form-control"
-                    placeholder="Cửa hàng nên lưu ý..."
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                  ></textarea>
+            {showWarning && <div className="warning-message">Bạn hãy chọn địa chỉ </div>}
+            <div className="div4">
+              <div className="itemG">
+                <FontAwesomeIcon className="div-icon" icon={faLocationDot} />
+                <div className="div-text-in">
+                  <div className="div-NameAddress">Other</div>
+                  <div className="div-text-in-text">Thêm địa chỉ giao hàng mới</div>
+                  <button className="button-eidt-b" onClick={() => openModal(0)}>
+                    Thêm địa chỉ giao hàng mới
+                  </button>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="div2">
-            <div className="col">
-              <div className="cart-restaurant">
-                <div className="title-cart">{shop.name}</div>
-                <div className="restaurant-cart">
-                  {cart.map((item) => (
-                    <div key={item.id}>
-                      <div className="">
-                        <div className="row">
-                          <div className="col-5 name-cart">{item.product.name}</div>
-                          <div className="inputQuantity col-3">
-                            <button className="btnQuantity" onClick={() => handleMinus(item.id)}>
-                              -
-                            </button>
-                            <input type="text" className="quantity-value" value={item.quantity} readOnly />
-                            <button className="btnQuantity" onClick={() => handlePlus(item.id)}>
-                              +
-                            </button>
-                          </div>
-                          <div className="col-4 price-cart">{formatNumberWithCommas(item.product.price * item.quantity)} đ</div>
-                        </div>
-                        <hr />
+              {renderAddressDiv(1, faHouse, 'Home')}
+              {renderAddressDiv(2, faBriefcase, 'Work')}
+              {address.map(
+                (addr, index) =>
+                  addr.status === 0 && (
+                    <div
+                      className={`itemG other ${selectedAddressId === addr.id ? 'selected' : ''}`}
+                      key={index}
+                    >
+                      <FontAwesomeIcon className="exit-icon" icon={faCircleXmark} onClick={() => openDeleteModal(addr.id)} />
+                      <FontAwesomeIcon className="div-icon ms-10" icon={faLocationDot} />
+                      <div className="div-text-in">
+                        <div className="div-NameAddress">Other</div>
+                        <div className="div-text-in-text">{addr.address}</div>
+                        <button className="button-eidt" onClick={() => handleSelectAddress(addr.id)}>
+                          Giao tới địa chỉ này
+                        </button>
+                        <FontAwesomeIcon className="penhouse" icon={faPenToSquare} onClick={() => openEditModal(addr.id)} />
                       </div>
                     </div>
-                  ))}
+                  )
+              )}
+            </div>
+          </div>
+          <div className="div6">
+            <label className="The-text">Phương thức thanh toán</label>
+            <label className="little-text">Thanh Toán khi nhận hàng</label>
+            <div className="div7">
+              <div className="div9">
+                <div className="div8">
+                  <FontAwesomeIcon className="div-iconic" icon={faMoneyBill} />
+                  <label className="text-cutevl">COD</label>
                 </div>
-                <div className="restaurant-checkout">
-                  <div className="restaurant-price">
-                    <FontAwesomeIcon className="iconWallet" icon={faWallet} />
-                    <span className="sumPrice">Tổng: {formatNumberWithCommas(sum)} đ</span>
-                  </div>
-                  <form className="payment-form" onSubmit={CreateOrder}>
-                    <button type="submit" className="payment-button">
-                      + Xác nhận thanh toán
-                    </button>
-                  </form>
-                 
+                <div className="color">
+                  <FontAwesomeIcon className="div-iconic" icon={faMoneyCheckDollar} />
+                  <label className="text-cutevl">Credit</label>
                 </div>
+                <div className="color">
+                  <FontAwesomeIcon className="div-iconic" icon={faBuildingColumns} />
+                  <label className="text-cutevl">Netbanking</label>
+                </div>
+              </div>
+              <div className="div10">
+                <label className="label-hihi">Ghi chú cho cửa hàng</label>
+                <textarea
+                  className="label-hihi-text form-control"
+                  placeholder="Cửa hàng nên lưu ý..."
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                ></textarea>
               </div>
             </div>
           </div>
         </div>
-        {isModalOpen && (
+        <div className="div2">
+          <div className="col">
+            <div className="cart-restaurant">
+              <div className="title-cart">{shop.name}</div>
+              <div className="restaurant-cart">
+                {cart.map((item) => (
+                  <div key={item.id}>
+                    <div className="">
+                      <div className="row">
+                        <div className="col-5 name-cart">{item.product.name}</div>
+                        <div className="inputQuantity col-3">
+                          <button className="btnQuantity" onClick={() => handleMinus(item.id)}>
+                            -
+                          </button>
+                          <input type="text" className="quantity-value" value={item.quantity} readOnly />
+                          <button className="btnQuantity" onClick={() => handlePlus(item.id)}>
+                            +
+                          </button>
+                        </div>
+                        <div className="col-4 price-cart">{formatNumberWithCommas(item.product.price * item.quantity)} đ</div>
+                      </div>
+                      <hr />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="restaurant-checkout">
+                <div className="restaurant-price">
+                  <FontAwesomeIcon className="iconWallet" icon={faWallet} />
+                  <span className="sumPrice">Tổng: {formatNumberWithCommas(sum)} đ</span>
+                </div>
+                <form className="payment-form" onSubmit={CreateOrder}>
+                  <button type="submit" className="payment-button">
+                    + Xác nhận thanh toán
+                  </button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {isModalOpen && (
         <div className="modal-father">
           <div className="modal-con">
             <h2>Thêm địa chỉ mới</h2>
             <form className="form-cute" onSubmit={handleSubmitAddress}>
-                <input className="text-cute" type="text" onChange={handleInput} name="name" placeholder="Tên khách hàng"  />
-                {errors.name && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.name}</p>}
-                <input className="text-cute" type="text" onChange={handleInput} name="details" placeholder="Địa chỉ nhận hàng"  />
-                {errors.details && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.details}</p>}
-                <input className="text-cute" type="text" onChange={handleInput} name="contact" placeholder="Số điện thoại nhận hàng"  />
-                {errors.contact && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.contact}</p>}
+              <input className="text-cute" type="text" onChange={handleInput} name="name" placeholder="Tên khách hàng" />
+              {errors.name && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.name}</p>}
+              <input className="text-cute" type="text" onChange={handleInput} name="details" placeholder="Địa chỉ nhận hàng" />
+              {errors.details && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.details}</p>}
+              <input className="text-cute" type="text" onChange={handleInput} name="contact" placeholder="Số điện thoại nhận hàng" />
+              {errors.contact && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.contact}</p>}
               <button className="button-good" type="submit">
                 Xác nhận
               </button>
@@ -427,25 +427,25 @@ export default function OrderAndListOrderItem() {
           </div>
         </div>
       )}
-     {isModalEdit && (
+      {isModalEdit && (
         <div className="modal-father">
           <div className="modal-con">
             <h2>Cập nhật địa chỉ</h2>
 
-              <form className="form-cute" onSubmit={handleUpdateAddress}>
-                <input className="text-cute" type="text" onChange={handleInput} name="name" placeholder="Tên khách hàng" defaultValue={addressToEdit.nameUser} />
-                {errors.name && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.name}</p>}
-                <input className="text-cute" type="text" onChange={handleInput} name="details" placeholder="Địa chỉ nhận hàng" defaultValue={addressToEdit.address} />
-                {errors.details && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.details}</p>}
-                <input className="text-cute" type="text" onChange={handleInput} name="contact" placeholder="Số điện thoại nhận hàng" defaultValue={addressToEdit.phoneNumber} />
-                {errors.contact && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.contact}</p>}
-                <button className="button-good" type="submit">Cập nhật</button>
-              </form>
+            <form className="form-cute" onSubmit={handleUpdateAddress}>
+              <input className="text-cute" type="text" onChange={handleInput} name="name" placeholder="Tên khách hàng" defaultValue={addressToEdit.nameUser} />
+              {errors.name && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.name}</p>}
+              <input className="text-cute" type="text" onChange={handleInput} name="details" placeholder="Địa chỉ nhận hàng" defaultValue={addressToEdit.address} />
+              {errors.details && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.details}</p>}
+              <input className="text-cute" type="text" onChange={handleInput} name="contact" placeholder="Số điện thoại nhận hàng" defaultValue={addressToEdit.phoneNumber} />
+              {errors.contact && <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>{errors.contact}</p>}
+              <button className="button-good" type="submit">Cập nhật</button>
+            </form>
 
 
 
             <button style={{ width: '100%' }} onClick={() => setIsModalEdit(false)}>Hủy
-            
+
             </button>
           </div>
         </div>
@@ -464,7 +464,7 @@ export default function OrderAndListOrderItem() {
           </div>
         </div>
       )}
-        <FooterHome />
-      </div>
-    );
-  }
+      <FooterHome />
+    </div>
+  );
+}

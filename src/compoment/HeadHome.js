@@ -40,7 +40,7 @@ export default function HeadHome() {
                             <div className='selectLocal col-auto'>
                                 <div className='dropdown'>
                                     <button class="dropdown-toggle" type="button" id="local-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                         Hà Nội
+                                        Hà Nội
                                     </button>
                                     <div class="dropdown-content">
                                         {citys.map((city) => (
@@ -66,7 +66,6 @@ export default function HeadHome() {
                                     </div>
                                     <div className='dropdown-content'>
                                         <span><Link to={`/ListOrderUser/1`} class="dropdown-item" href="#">Đơn hàng</Link></span>
-                                        <span><a class="dropdown-item" href="#">Lịch sử đơn hàng </a></span>
                                         <span><a class="dropdown-item" href="#">Chỉnh sửa thông tin </a></span>
                                         <span><a class="dropdown-item" href="#">Đăng Suất</a></span>
                                     </div>

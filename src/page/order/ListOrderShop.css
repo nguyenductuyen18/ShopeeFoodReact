@@ -9,6 +9,10 @@
 td{
     margin-top: 5px;
 }
+.centers{
+    text-align: center;
+    margin-top: 1%;
+}
  
 /* Each order card */
 .order-card {
